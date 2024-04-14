@@ -5,21 +5,20 @@ PROJECT_NAME=loyiha
 PROJECT_ROOT=/var/www/$PROJECT_NAME
 
 # Define the Python version and virtual environment path
-PYTHON_VERSION=3.9
+PYTHON_VERSION=9
 VENV_PATH=$PROJECT_ROOT/venv
 
 # Define the Nginx configuration file path
 NGINX_CONF=/etc/nginx/sites-available/$PROJECT_NAME.conf
 
+# Create the project root directory
+
 # Install required packages
 sudo apt-get update
 sudo apt-get install -y python3-dev python3-venv nginx
 
-# Create the project root directory
-sudo mkdir -p $PROJECT_ROOT
-
 # Create a virtual environment
-python$PYTHON_VERSION -m venv $VENV_PATH
+python3.$PYTHON_VERSION -m venv $VENV_PATH
 
 # Activate the virtual environment and install Django and Gunicorn
 source $VENV_PATH/bin/activate
@@ -28,14 +27,8 @@ pip install django gunicorn
 
 # Create a new Django project
 cd $PROJECT_ROOT
-django-admin startproject $PROJECT_NAME .
+pip install -r requirements.txt
 pip install psycopg2-binary
-
-# Create the SQLite3 database file
-touch $PROJECT_ROOT/db.sqlite3
-
-# Apply Django migrations
-python manage.py migrate
 
 # Create a systemd service for Gunicorn
 sudo tee /etc/systemd/system/$PROJECT_NAME.service > /dev/null <<EOF
@@ -47,17 +40,19 @@ After=network.target
 User=$USER
 Group=www-data
 WorkingDirectory=$PROJECT_ROOT
-ExecStart=$VENV_PATH/bin/gunicorn --access-logfile - --workers 3 --bind unix:$PROJECT_ROOT/$PROJECT_NAME.sock $PROJECT_NAME.wsgi:application
+ExecStart=$VENV_PATH/bin/gunicorn --access-logfile - --workers 3 --bind unix:$PROJECT_ROOT/$PROJECT_NAME.sock loyiha.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
 # Start and enable the Gunicorn service
-sudo systemctl daemon-reload
+systemctl daemon-reload
 sudo systemctl enable $PROJECT_NAME
 sudo systemctl start $PROJECT_NAME
-
+python3 manage.py makemigrations
+pwd
+python3 manage.py migrate
 # Create the Nginx configuration file
 sudo tee $NGINX_CONF > /dev/null <<EOF
 server {
