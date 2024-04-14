@@ -62,7 +62,7 @@ sudo systemctl start $PROJECT_NAME
 sudo tee $NGINX_CONF > /dev/null <<EOF
 server {
     listen 80;
-    server_name your_domain_or_ip;
+    server_name 185.104.251.81;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
