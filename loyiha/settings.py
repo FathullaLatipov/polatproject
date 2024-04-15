@@ -52,21 +52,35 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:5500",
-    "http://localhost:3001",
-    "http://localhost:3002",
-    "http://localhost:3003",
-    "http://localhost:3004",
-    "http://localhost:3005",
-    "http://127.0.0.1:3001",
-    "http://127.0.0.1:3002",
-    "http://127.0.0.1:3003",
-    "http://127.0.0.1:3004",
-    "http://127.0.0.1:8000",
-]
+
+#CORS_ALLOWED_ORIGINS = [
+#    "http://localhost:3000",
+#    "http://127.0.0.1:3000",
+#    "http://127.0.0.1:5500",
+#    "http://localhost:3001",
+#    "http://localhost:3002",
+#    "http://localhost:3003",
+#    "http://localhost:3004",
+#    "http://localhost:3005",
+#    "http://127.0.0.1:3001",
+#    "http://127.0.0.1:3002",
+#    "http://127.0.0.1:3003",
+#    "http://127.0.0.1:3004",
+#    "http://127.0.0.1:8000",
+#]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:4200',
+    'http://127.0.0.1',
+    'https://makler1.herokuapp.com',
+    'https://84.252.75.67',
+    'https://api.makleruz.uz',
+    'https://back.protools.uz/'
+)
 
 ROOT_URLCONF = 'loyiha.urls'
 
@@ -92,22 +106,23 @@ WSGI_APPLICATION = 'loyiha.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': "loyiha",
-#         "USER": "loyiha",
-#         "PASSWORD": "loyihapassword",
-#         "HOST": "localhost",
-#         "PORT": 5432,
-#     }
-# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+     'default': {
+         "ENGINE": 'django.db.backends.postgresql_psycopg2',
+         "NAME": "loyiha_db",
+         "USER": "loyiha",
+         "PASSWORD": "loyiha",
+         "HOST": "localhost",
+         "PORT": 5432,
+     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
