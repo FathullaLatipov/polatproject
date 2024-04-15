@@ -11,4 +11,4 @@ class ZapchastSerializer(serializers.ModelSerializer):
 class MaxsulotSerializer(serializers.ModelSerializer):
     class Meta:
         model = Maxsulot
-        fields = ('zapchast', 'name_uz', 'name_ru', 'description', 'description_ru', 'price', 'brand')
+        fields = ('zapchast', 'name_uz', 'name_ru', 'description', 'description_ru', 'price', 'brand', 'status')

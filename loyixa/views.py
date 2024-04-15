@@ -231,7 +231,7 @@ class Maxsulot_all(APIView):
 
     @staticmethod
     def post(request):
-        required = ["zapchast_id", 'name_uz', "name_ru", 'description', "description_ru", 'price', 'brand']
+        required = ["zapchast_id", 'name_uz', "name_ru", 'description', "description_ru", 'price', 'brand', 'status']
         arr = {}
         for i in required:
             if i not in request.data:
@@ -258,7 +258,7 @@ class Maxsulot_all(APIView):
             return JsonResponse({"status": "Error", "message": "Maxsulot does not exist"},
                                 status=status.HTTP_404_NOT_FOUND)
 
-        required = ['name_uz', 'name_ru', 'description', 'description_ru', 'price', 'brand']
+        required = ['name_uz', 'name_ru', 'description', 'description_ru', 'price', 'brand', 'status']
         arr = {}
         for i in required:
             if i not in request.data:
